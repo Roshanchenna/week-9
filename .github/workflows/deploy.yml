@@ -25,4 +25,4 @@ jobs:
           echo "StrictHostKeyChecking=no" >> ~/.ssh/config
           
           # SSH to the EC2 instance and run the deployment script
-          ssh -i keyfile ubuntu@ec2-16-170-159-119.eu-north-1.compute.amazonaws.com "sudo bash ~/deploy.sh"
+          ssh -i keyfile ubuntu@ec2-16-170-159-119.eu-north-1.compute.amazonaws.com "sudo source ~/deploy.sh"
