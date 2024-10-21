@@ -27,4 +27,4 @@ jobs:
         run: |
           echo "$SSH_PRIVATE_KEY" > keyfile
           chmod 600 keyfile
-          ssh -i keyfile ubuntu@ec2-16-170-159-119.eu-north-1.compute.amazonaws.com "sudo bash ~/deploy.sh"
+          ssh -i keyfile ubuntu@ec2-16-170-159-119.eu-north-1.compute.amazonaws.com "export  PATH=$PATH:/home/ubuntu/.nvm/versions/node/v20.5.0/bin && sudo bash ~/deploy.sh"
