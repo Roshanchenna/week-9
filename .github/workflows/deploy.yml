@@ -13,6 +13,10 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v2
 
+      - name: Create .ssh directory
+        run: |
+          mkdir -p ~/.ssh
+
       - name: Add EC2 host to known_hosts
         run: |
           ssh-keyscan -H ec2-16-170-159-119.eu-north-1.compute.amazonaws.com >> ~/.ssh/known_hosts
