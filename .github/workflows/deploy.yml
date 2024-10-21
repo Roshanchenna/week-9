@@ -3,23 +3,24 @@ name: Deploy
 on:
   push:
     branches:
-      - master 
+      - master # or the branch you want to deploy from
 
 jobs:
   deploy:
     runs-on: ubuntu-latest
 
     steps:
-    - name: Checkout code
-      uses: actions/checkout@v2
+      - name: Checkout code
+        uses: actions/checkout@v2
 
-    - name: SSH and Deploy
-      env:
-        SSH_PRIVATE_KEY: ${{ secrets.SSH_PRIVATE_KEY }}
-      run: |
-        echo "$SSH_PRIVATE_KEY" > keyfile
-        chmod 600 keyfile
-        mkdir -p ~/.ssh
-        cp known_hosts ~/.ssh/known_hosts
-        ssh -t -i keyfile ubuntu@ec2-16-170-159-119.eu-north-1.compute.amazonaws.com "sudo bash ~/deploy.sh"
+      - name: Add EC2 host to known_hosts
+        run: |
+          ssh-keyscan -H ec2-16-170-159-119.eu-north-1.compute.amazonaws.com >> ~/.ssh/known_hosts
 
+      - name: SSH and deploy
+        env:
+          SSH_PRIVATE_KEY: ${{ secrets.SSH_PRIVATE_KEY }}
+        run: |
+          echo "$SSH_PRIVATE_KEY" > keyfile
+          chmod 600 keyfile
+          ssh -i keyfile ubuntu@ec2-16-170-159-119.eu-north-1.compute.amazonaws.com "sudo bash ~/deploy.sh"
