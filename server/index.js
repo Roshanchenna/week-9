@@ -13,7 +13,7 @@ app.use("/admin", adminRouter)
 app.use("/user", userRouter)
 
 app.get("/",(req, res)=>{
-	res.send("Hello from Roshan Chenna");
+	res.send("Hey there, we'll come Roshan's servers");
 }
 )
 // Connect to MongoDB
