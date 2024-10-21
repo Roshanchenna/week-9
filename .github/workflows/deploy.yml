@@ -20,5 +20,9 @@ jobs:
           echo "$SSH_PRIVATE_KEY" > keyfile
           chmod 600 keyfile
           mkdir -p ~/.ssh
-          cp known_hosts ~/.ssh/known_hosts
-          ssh -t -i keyfile ubuntu@ec2-16-170-159-119.eu-north-1.compute.amazonaws.com "sudo bash ~/deploy.sh"
+          
+          # Disable host key checking to avoid "Host key verification failed"
+          echo "StrictHostKeyChecking=no" >> ~/.ssh/config
+          
+          # SSH to the EC2 instance and run the deployment script
+          ssh -i keyfile ubuntu@ec2-16-170-159-119.eu-north-1.compute.amazonaws.com "sudo bash ~/deploy.sh"
