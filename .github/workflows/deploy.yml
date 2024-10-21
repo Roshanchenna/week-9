@@ -21,7 +21,7 @@ jobs:
         run: |
           ssh-keyscan -H ec2-16-170-159-119.eu-north-1.compute.amazonaws.com >> ~/.ssh/known_hosts
 
-      - name: SSH and deploy
+      - name: SSH and Deploy
         env:
           SSH_PRIVATE_KEY: ${{ secrets.SSH_PRIVATE_KEY }}
         run: |
