@@ -27,4 +27,15 @@ jobs:
         run: |
           echo "$SSH_PRIVATE_KEY" > keyfile
           chmod 600 keyfile
-          ssh -i keyfile ubuntu@ec2-16-170-159-119.eu-north-1.compute.amazonaws.com "export  PATH=$PATH:/home/ubuntu/.nvm/versions/node/v20.5.0/bin && sudo bash ~/deploy.sh"
+          ssh -i keyfile ubuntu@ec2-16-170-159-119.eu-north-1.compute.amazonaws.com << 'EOF'
+            # Check if PM2 is installed, if not, install it
+            if ! command -v pm2 &> /dev/null; then
+              echo "PM2 not found, installing..."
+              npm install -g pm2
+            else
+              echo "PM2 is already installed."
+            fi
+            
+            # Run your deploy script
+            sudo bash ~/deploy.sh
+          EOF
